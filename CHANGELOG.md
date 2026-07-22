@@ -11,7 +11,7 @@ mod ini dan seterusnya.
 > teleport masuk/keluar, HUD per-grup, Safari Ball berkala, pembersihan Pokemon liar) TIDAK
 > ada di kode ini.
 
-## [0.4.0] - 2026-07-19
+## [0.4.0] - 2026-07-22
 
 ### Added
 - `/safari forcespawn [jumlah]` (admin) -- spawn paksa `jumlah` (default 1, maks 50) Pokemon
@@ -30,7 +30,7 @@ mod ini dan seterusnya.
   titik & region acak. `SafariRegion.minY`/`maxY` diubah dari `private` menjadi publik agar
   bisa dipakai meng-clamp hasil pencarian permukaan tanah (heightmap).
 
-## [0.3.0] - 2026-07-19
+## [0.3.0] - 2026-07-20
 
 ### Added
 - `/safari list` (admin) -- menampilkan seluruh grup beserta anggotanya dan status
