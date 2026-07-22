@@ -5,7 +5,7 @@ Semua perubahan penting pada project ini dicatat di file ini. Format mengikuti
 [Semantic Versioning](https://semver.org/). Changelog ini mulai dicatat dari rilis pertama
 mod ini dan seterusnya.
 
-## [0.7.0] - 2026-07-19
+## [0.7.0] - 2026-07-22
 
 ### Added
 - Anggota grup yang sedang giliran sekarang menerima **20 Safari Ball setiap 20 detik**
