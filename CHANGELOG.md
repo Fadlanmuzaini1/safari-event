@@ -5,30 +5,6 @@ Semua perubahan penting pada project ini dicatat di file ini. Format mengikuti
 [Semantic Versioning](https://semver.org/). Changelog ini mulai dicatat dari rilis pertama
 mod ini dan seterusnya.
 
-## [0.5.0] - 2026-07-21
-
-### Added
-- Spawn Pokemon OTOMATIS & berkala (default tiap 1 detik) di titik acak dalam area Safari,
-  aktif otomatis selama ada giliran grup yang berjalan (dimulai begitu `/safari start`
-  dijalankan, berhenti otomatis begitu giliran selesai/dihentikan) -- tidak perlu command
-  admin sama sekali.
-- `spawn/PassiveSpawnScheduler.kt` -- memakai `ForceSpawnManager` yang sama persis dengan
-  `/safari forcespawn` (tidak ada logic spawn yang diduplikasi), dipicu terus-menerus lewat
-  timer selama `EventManager.isRunning`.
-- `PassiveSpawnConfig` (`passiveSpawn` di `safari-event.json`): `enabled`, `intervalTicks`
-  (default `20` = 1 detik), `maxConcurrentWildSpawns` (default `20`).
-
-### Changed
-- `ForceSpawnManager.ForceSpawnResult.Success` sekarang menyertakan `uuid` dan `worldKey`
-  dari entity yang di-spawn, dibutuhkan `PassiveSpawnScheduler` untuk melacak apakah
-  Pokemon hasil spawn otomatis masih hidup (lewat `World.getEntity(uuid)`).
-
-### Fixed / Safety
-- `maxConcurrentWildSpawns` ditambahkan sebagai pengaman struktural (bukan diminta
-  eksplisit): tanpa batas ini, spawn 1 Pokemon/detik selama giliran 30 menit berpotensi
-  menumpuk sampai 1800 entity liar dan membebani server secara serius. Begitu Pokemon
-  yang ter-track ditangkap/despawn, slot spawn berikutnya otomatis terbuka lagi.
-
 ## [0.4.0] - 2026-07-21
 
 ### Added
