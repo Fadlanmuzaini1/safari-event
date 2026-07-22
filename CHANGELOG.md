@@ -5,6 +5,36 @@ Semua perubahan penting pada project ini dicatat di file ini. Format mengikuti
 [Semantic Versioning](https://semver.org/). Changelog ini mulai dicatat dari rilis pertama
 mod ini dan seterusnya.
 
+## [0.6.0] - 2026-07-22
+
+### Added
+- Pemain sekarang OTOMATIS diteleport ke titik acak di dalam area Safari tepat saat
+  gilirannya di-start (`/safari start <grup> <durasi>`), dan dikembalikan PERSIS ke lokasi
+  asal mereka (sebelum teleport masuk) tepat saat giliran itu selesai -- baik selesai wajar
+  (timer habis) maupun dihentikan paksa admin (`/safari stop`).
+- `region/SafariTeleporter.kt` -- mengelola teleport masuk/keluar, termasuk menangani pemain
+  yang sempat OFFLINE di momen krusial: login SELAGI gilirannya sendiri masih aktif dan
+  belum pernah di-teleport masuk -> langsung diteleport masuk saat itu; login SETELAH
+  gilirannya sudah selesai (offline tepat saat seharusnya dikembalikan) -> langsung
+  dikembalikan ke lokasi semula saat login, mencegah pemain "terjebak" permanen di area
+  Safari. Didaftarkan lewat `ServerPlayConnectionEvents.JOIN`.
+- `region/RegionPositionFinder.kt` -- utility "cari titik acak di atas permukaan tanah dalam
+  sebuah region", diekstrak supaya dipakai bersama oleh `ForceSpawnManager` (spawn) dan
+  `SafariTeleporter` (teleport pemain) tanpa duplikasi logic.
+
+### Changed
+- **BossBar/ActionBar sekarang HANYA ditampilkan ke anggota grup yang sedang giliran**
+  (`TurnManager.currentGroup()`), bukan lagi ke semua pemain online. Pemain lain yang
+  online tapi bukan anggota grup aktif (belum mulai, grup lain, atau sudah selesai) tidak
+  melihat bar ini sama sekali. Logic pruning `HudManager` diubah dari "berbasis
+  online/offline" menjadi "berbasis keanggotaan grup aktif saat ini" (lebih umum, otomatis
+  turut menangani kasus disconnect juga).
+- `ForceSpawnManager` direfactor untuk memakai `RegionPositionFinder` (menghapus duplikasi
+  logic pencarian titik acak + permukaan tanah yang sebelumnya inline di dalamnya).
+- `EventManager` menerima dependency baru `SafariTeleporter`; `startGroup()` memanggil
+  `teleportGroupIn()` tepat setelah grup dikunci, `handleGroupTurnFinished()` memanggil
+  `teleportGroupOut()` sebelum broadcast hasil giliran.
+
 ## [0.5.0] - 2026-07-21
 
 ### Added
