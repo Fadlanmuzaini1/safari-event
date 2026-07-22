@@ -5,12 +5,6 @@ Semua perubahan penting pada project ini dicatat di file ini. Format mengikuti
 [Semantic Versioning](https://semver.org/). Changelog ini mulai dicatat dari rilis pertama
 mod ini dan seterusnya.
 
-> **Catatan snapshot**: ini adalah rekonstruksi source code pada titik rilis **v0.4.0**
-> (diminta ulang setelah rilis v0.5.0 ke atas sudah dikembangkan), disusun manual berdasarkan
-> catatan detail di CHANGELOG proyek utama. Entri v0.5.0 ke atas (spawn otomatis berkala,
-> teleport masuk/keluar, HUD per-grup, Safari Ball berkala, pembersihan Pokemon liar) TIDAK
-> ada di kode ini.
-
 ## [0.4.0] - 2026-07-21
 
 ### Added
