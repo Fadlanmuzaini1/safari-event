@@ -11,7 +11,7 @@ mod ini dan seterusnya.
 > teleport masuk/keluar, HUD per-grup, Safari Ball berkala, pembersihan Pokemon liar) TIDAK
 > ada di kode ini.
 
-## [0.4.0] - 2026-07-22
+## [0.4.0] - 2026-07-21
 
 ### Added
 - `/safari forcespawn [jumlah]` (admin) -- spawn paksa `jumlah` (default 1, maks 50) Pokemon
