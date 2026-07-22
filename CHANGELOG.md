@@ -5,6 +5,39 @@ Semua perubahan penting pada project ini dicatat di file ini. Format mengikuti
 [Semantic Versioning](https://semver.org/). Changelog ini mulai dicatat dari rilis pertama
 mod ini dan seterusnya.
 
+## [0.7.0] - 2026-07-19
+
+### Added
+- Anggota grup yang sedang giliran sekarang menerima **20 Safari Ball setiap 20 detik**
+  (BUKAN 1 buah tiap 1 detik) -- pemberian pertama terjadi tepat saat giliran di-start,
+  lalu berulang tiap interval selama giliran masih berjalan.
+- `item/SafariBallSupplier.kt` -- memakai `CobblemonItems.SAFARI_BALL` (konstanta resmi
+  Cobblemon, diverifikasi dari source `CobblemonItems.kt`) dan `PlayerEntity.giveItemStack()`
+  vanilla untuk memberi item ke inventory pemain.
+- Semua Pokemon LIAR (bukan milik pemain) di dalam area Safari sekarang otomatis dihapus
+  setiap SATU giliran grup selesai -- baik selesai wajar (timer habis) maupun dihentikan
+  paksa admin (`/safari stop`).
+- `spawn/WildPokemonCleaner.kt` -- memindai SEMUA region Safari terdaftar lewat
+  `World.getEntitiesByClass(PokemonEntity::class.java, region.toBox()) { it.pokemon.isWild() }`,
+  hanya menghapus Pokemon yang `pokemon.isWild()` (dikonfirmasi dari source Cobblemon:
+  `storeCoordinates.get() == null`) -- tidak pernah menghapus Pokemon milik pemain (mis.
+  yang sedang follow di luar Poke Ball).
+- `SafariRegion.toBox()` -- konversi AABB region ke `Box` vanilla, dipakai
+  `WildPokemonCleaner` untuk query entity. `RegionManager.allRegions()` -- salinan read-only
+  semua region terdaftar.
+- `SafariBallSupplyConfig` (`safariBallSupply` di `safari-event.json`): `enabled`, `amount`
+  (default `20`), `intervalTicks` (default `400` = 20 detik).
+- `WildCleanupConfig` (`wildCleanup.enabled` di `safari-event.json`, default `true`).
+
+### Changed
+- `EventManager` menerima 2 dependency baru: `SafariBallSupplier` dan `WildPokemonCleaner`.
+  `startGroup()` memanggil `safariBallSupplier.grantImmediate()` tepat setelah teleport
+  masuk; `handleGroupTurnFinished()` memanggil `wildPokemonCleaner.removeAllWildPokemon()`
+  setelah teleport keluar, sebelum broadcast hasil giliran.
+- `SafariBallSupplier.tick()` didelegasikan lewat `EventManager.tick()` (bukan pendaftaran
+  `ServerTickEvents` terpisah) karena `EventManager` sudah memegang dependency ke situ untuk
+  keperluan `grantImmediate()`.
+
 ## [0.6.0] - 2026-07-22
 
 ### Added
